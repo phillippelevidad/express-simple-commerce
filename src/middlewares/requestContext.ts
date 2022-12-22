@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { useRequestContext } from "hooks/useRequestContext";
-import { withRequestContext } from "lib/requestContext/requestContext";
+import {
+  withRequestContext,
+  endRequestContext as _endRequestContext,
+} from "lib/requestContext/requestContext";
 import { v4 as uuid } from "uuid";
 
 export const REQUEST_ID_KEY = "__requestId__";
@@ -15,6 +18,13 @@ export function requestContext() {
       useRequestContext(REQUEST_ID_KEY, uuid());
       next();
     });
+  };
+}
+
+export function endRequestContext() {
+  return (req: Request, res: Response, next: NextFunction) => {
+    _endRequestContext();
+    next();
   };
 }
 

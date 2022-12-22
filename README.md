@@ -12,3 +12,10 @@ Inspect `src/index.js` and go from there.
 You'll need to provide an `.env` file with a MongoDB URI. Use `.env.example` as a starting point.
 
 The code is like 90% documented to help you through.
+
+---
+
+### References:
+
+- [Per HTTP request Container with InversifyJS](https://phillcode.io/per-http-request-container-with-inversifyjs)
+- [Simple Context Passing With AsyncLocalStorage in Node.js](https://codeandpepper.com/asynclocalstorage-in-node-js/)
