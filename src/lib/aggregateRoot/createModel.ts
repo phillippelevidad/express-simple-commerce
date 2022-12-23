@@ -7,66 +7,44 @@ import { useRequestContext } from "hooks/useRequestContext";
 import { WithMetaDocument } from "services/common/fields/meta/WithMetaDocument";
 import { WithMetaProps } from "services/common/fields/meta/WithMetaProps";
 import { withMetaSchema } from "services/common/fields/meta/withMetaSchema";
-import { createSlug } from "services/common/helpers/createSlug";
 import { AggregateRootDocument } from "./AggregateRootDocument";
 import { AggregateRootProps } from "./AggregateRootProps";
 import { aggregateRootSchema } from "./aggregateRootSchema";
 import { configureAggregateRootSchema } from "./configureAggregateRootSchema";
 
-export const Category = createModel<{
-  name: string;
-  slug?: string;
-  description?: string;
-}>(
-  "Category",
-  "Categories",
-  {
-    name: {
-      type: String,
-      maxlength: 50,
-      minlength: 3,
-      required: true,
-    },
-    slug: {
-      type: String,
-      maxlength: 50,
-      minlength: 3,
-      required: true,
-    },
-    description: {
-      type: String,
-    },
-  },
-  {
-    buildProps: (props) => ({
-      slug: props.slug ?? createSlug(props.name),
-    }),
-  }
-);
+export type AugmentedModelProps<TModelProps> = TModelProps &
+  AggregateRootProps &
+  WithMetaProps;
+
+export type ModelDocument<TModelProps> = AugmentedModelProps<TModelProps> &
+  AggregateRootDocument &
+  WithMetaDocument &
+  mongoose.Document & {
+    addDomainEvent(event: DomainEvent): void;
+  };
+
+export type Model<TModelProps> = mongoose.Model<ModelDocument<TModelProps>> & {
+  build(props: AugmentedModelProps<TModelProps>): ModelDocument<TModelProps>;
+};
 
 export interface CreateModelOptions {
   buildProps?: (props: any) => Partial<any>;
 }
 
+/**
+ * Creates a mongoose model that can be used to operate on the database.
+ * @param modelName Singular name of the model.
+ * @param collectionName Name of the collection (plural name of the model).
+ * @param mongooseSchemaProperties Properties of the mongoose schema. Will be passed as parameters to `new mongoose.Schema()`.
+ * @param options Additional configurations for the schema, such as `buildProps`.
+ * @returns A mongoose model.
+ */
 export function createModel<TModelProps>(
   modelName: string,
   collectionName: string,
   mongooseSchemaProperties: any,
   options: CreateModelOptions = {}
 ) {
-  type PropsType = TModelProps & AggregateRootProps & WithMetaProps;
-
-  type DocumentType = PropsType &
-    AggregateRootDocument &
-    WithMetaDocument &
-    mongoose.Document & {
-      addDomainEvent(event: DomainEvent): void;
-    };
-
-  type ModelType = mongoose.Model<DocumentType> & {
-    build(props: PropsType): DocumentType;
-  };
-
   function domainEventsKey(entityId: string) {
     return `__domainEvents_${collectionName}_${entityId}`;
   }
@@ -106,7 +84,7 @@ export function createModel<TModelProps>(
 
   configureAggregateRootSchema(schema);
 
-  schema.statics.build = (props: PropsType) => {
+  schema.statics.build = (props: AugmentedModelProps<TModelProps>) => {
     const buildAggregateRootProps = useBuildAggregateRootProps();
     return new Model({
       ...props,
@@ -115,7 +93,7 @@ export function createModel<TModelProps>(
     });
   };
 
-  const Model = mongoose.model<DocumentType, ModelType>(
+  const Model = mongoose.model<DocumentType, Model<TModelProps>>(
     modelName,
     schema,
     collectionName
