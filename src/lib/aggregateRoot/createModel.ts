@@ -27,6 +27,10 @@ export type Model<TModelProps> = mongoose.Model<ModelDocument<TModelProps>> & {
   build(props: AugmentedModelProps<TModelProps>): ModelDocument<TModelProps>;
 };
 
+/**
+ * Options for `createModel()`.
+ * @property buildProps A function that will be called before creating a new model. It will receive the properties passed to `Model.build()` and should return the properties that will be used to create the model.
+ */
 export interface CreateModelOptions {
   buildProps?: (props: any) => Partial<any>;
 }
