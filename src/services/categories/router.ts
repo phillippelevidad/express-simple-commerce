@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { Category, CategoryDocument, CategoryProps } from "./model";
 import { faker } from "@faker-js/faker";
 import { NotFoundError } from "lib/errors/NotFoundError";
 import { applyUpdateActions } from "lib/updateActions/applyUpdateActions";
@@ -7,6 +6,7 @@ import { UpdateActions } from "lib/updateActions/UpdateActions";
 import { metaUpdateActionHandlers } from "services/common/fields/meta/metaUpdateActionHandlers";
 import { createSlug } from "services/common/helpers/createSlug";
 import { CategoryCreated } from "./events/CategoryCreated";
+import { Category, CategoryDocument, CategoryProps } from "./model";
 
 export const router = Router();
 

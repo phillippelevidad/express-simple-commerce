@@ -1,12 +1,12 @@
+import mongoose from "mongoose";
+import { EventBus } from "lib/events/EventBus";
+import { TOKENS as LIB_TOKENS } from "lib/TOKENS";
 import { useCurrentTenant } from "hooks/useCurrentTenant";
 import { useCurrentUser } from "hooks/useCurrentUser";
 import { useDbFilterByCurrentTenant } from "hooks/useDbFilterByCurrentTenant";
 import { useDbFilterByCurrentUser } from "hooks/useDbFilterByCurrentUser";
 import { useDbFilterDeletedRecords } from "hooks/useDbFilterDeletedRecords";
 import { useDependency } from "hooks/useDependency";
-import { EventBus } from "lib/events/EventBus";
-import { TOKENS as LIB_TOKENS } from "lib/TOKENS";
-import mongoose from "mongoose";
 
 export function configureAggregateRootSchema(schema: mongoose.Schema): void {
   schema.pre("save", function (next) {

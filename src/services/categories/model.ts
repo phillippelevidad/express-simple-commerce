@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import { AggregateRootProps } from "lib/aggregateRoot/AggregateRootProps";
 import { AggregateRootDocument } from "lib/aggregateRoot/AggregateRootDocument";
+import { AggregateRootProps } from "lib/aggregateRoot/AggregateRootProps";
 import { aggregateRootSchema } from "lib/aggregateRoot/aggregateRootSchema";
 import { configureAggregateRootSchema } from "lib/aggregateRoot/configureAggregateRootSchema";
+import { DomainEvent } from "lib/events/DomainEvent";
 import { useBuildAggregateRootProps } from "hooks/useBuildAggregateRootProps";
+import { useRequestContext } from "hooks/useRequestContext";
 import { WithMetaDocument } from "services/common/fields/meta/WithMetaDocument";
 import { WithMetaProps } from "services/common/fields/meta/WithMetaProps";
 import { withMetaSchema } from "services/common/fields/meta/withMetaSchema";
 import { createSlug } from "services/common/helpers/createSlug";
-import { DomainEvent } from "lib/events/DomainEvent";
-import { useRequestContext } from "hooks/useRequestContext";
 
 export interface CategoryProps extends AggregateRootProps, WithMetaProps {
   name: string;

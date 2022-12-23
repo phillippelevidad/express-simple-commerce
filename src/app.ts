@@ -1,15 +1,15 @@
 import "express-async-errors";
 import "services/common/register";
-import express from "express";
-import cors from "cors";
 import { json } from "body-parser";
-import { errorHandler } from "middlewares/errorHandler";
-import { router as categoriesRouter } from "services/categories/router";
+import cors from "cors";
+import express from "express";
+import { NotFoundError } from "lib/errors/NotFoundError";
 import { currentTenant } from "middlewares/currentTenant";
 import { currentUser } from "middlewares/currentUser";
-import { requestContext } from "middlewares/requestContext";
-import { NotFoundError } from "lib/errors/NotFoundError";
 import { disposeScopedContainer } from "middlewares/disposeScopedContainer";
+import { errorHandler } from "middlewares/errorHandler";
+import { requestContext } from "middlewares/requestContext";
+import { router as categoriesRouter } from "services/categories/router";
 
 export const app = express();
 

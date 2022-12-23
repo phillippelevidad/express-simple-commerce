@@ -1,5 +1,5 @@
-import { AggregateRootDocument } from "lib/aggregateRoot/AggregateRootDocument";
 import { v4 as uuid } from "uuid";
+import { AggregateRootDocument } from "lib/aggregateRoot/AggregateRootDocument";
 
 /**
  * Base class for domain events.

@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { useRequestContext } from "hooks/useRequestContext";
+import { v4 as uuid } from "uuid";
 import {
   withRequestContext,
   endRequestContext as _endRequestContext,
 } from "lib/requestContext/requestContext";
-import { v4 as uuid } from "uuid";
+import { useRequestContext } from "hooks/useRequestContext";
 
 export const REQUEST_ID_KEY = "__requestId__";
 

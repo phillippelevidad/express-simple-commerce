@@ -1,0 +1,13 @@
+{
+  "importOrderParserPlugins": ["typescript", "decorators-legacy"],
+  "importOrderCaseInsensitive": true,
+  "importOrder": [
+    "^[^lib|middlewares|hooks|services|../|./](.*)$",
+    "^lib/(.*)$",
+    "^middlewares/(.*)$",
+    "^hooks/(.*)$",
+    "^services/(.*)$",
+    "^../(.*)$",
+    "^./(.*)$"
+  ]
+}
