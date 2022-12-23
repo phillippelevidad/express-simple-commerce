@@ -8,6 +8,17 @@ import { useDbFilterByCurrentUser } from "hooks/useDbFilterByCurrentUser";
 import { useDbFilterDeletedRecords } from "hooks/useDbFilterDeletedRecords";
 import { useDependency } from "hooks/useDependency";
 
+/**
+ * Configures an aggregate root for use with mongoose.
+ * Adds the following features:
+ * - Optimistic concurrency control (version field)
+ * - Timestamps (createdAt, updatedAt fields)
+ * - Tenant filtering
+ * - User filtering
+ * - Domain event publishing
+ * - Soft delete
+ * @param schema The mongoose schema to configure.
+ */
 export function configureAggregateRootSchema(schema: mongoose.Schema): void {
   schema.pre("save", function (next) {
     this.increment();

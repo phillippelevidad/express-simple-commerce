@@ -2,6 +2,10 @@ import { CurrentTenant } from "lib/auth/CurrentTenant";
 import { useCurrentTenant } from "./useCurrentTenant";
 import { useCurrentUser } from "./useCurrentUser";
 
+/**
+ * Returns a function that can be used to build the props for an aggregate root.
+ * @returns A function that can be used to build the props for an aggregate root.
+ */
 export function useBuildAggregateRootProps() {
   return () => ({
     tenantId: getCurrentTenantOrThrow().id,
@@ -10,7 +14,7 @@ export function useBuildAggregateRootProps() {
   });
 }
 
-export function getCurrentTenantOrThrow(
+function getCurrentTenantOrThrow(
   errorMessage = "CurrentTenant was not set for the request"
 ): CurrentTenant | never {
   const [tenant] = useCurrentTenant();
@@ -18,7 +22,7 @@ export function getCurrentTenantOrThrow(
   return tenant;
 }
 
-export function getCurrentUserOrThrow(
+function getCurrentUserOrThrow(
   errorMessage = "CurrentUser was not set for the request"
 ): CurrentTenant | never {
   const [user] = useCurrentUser();

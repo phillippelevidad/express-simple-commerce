@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+/**
+ * The base schema for all aggregate roots. Includes:
+ * - tenantId
+ * - createdBy
+ * - updatedBy
+ */
 export const aggregateRootSchema = {
   tenantId: {
     type: mongoose.Types.ObjectId,

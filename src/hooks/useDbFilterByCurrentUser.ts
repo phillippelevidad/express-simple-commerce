@@ -1,14 +1,9 @@
-import { useRequestContext } from "./useRequestContext";
+import { GetSetHookReturnValue, createGetSetHook } from "./createGetSetHook";
 
 const KEY = "__dbFilterByCurrentUser__";
 
 export function useDbFilterByCurrentUser(
   filterByCurrentUser = true
-): [boolean, (value: boolean) => void] {
-  const [value, setValue] = useRequestContext<boolean>(
-    KEY,
-    filterByCurrentUser
-  );
-
-  return [value!, setValue];
+): GetSetHookReturnValue<boolean> {
+  return createGetSetHook<boolean>(KEY, filterByCurrentUser);
 }
